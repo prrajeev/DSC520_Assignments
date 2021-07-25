@@ -1,0 +1,138 @@
+---
+title: "assignment_07_PonisserilRadhakrishnan"
+author: "Radhakrishnan Ponisseril"
+date: "7/24/2021"
+output: pdf_document
+---
+
+```{r include=TRUE}
+library(ggm)
+library(ggplot2)
+```
+
+## Student Survey
+
+### As a data science intern with newly learned knowledge in skills in statistical correlation and R programming, you will analyze the results of a survey recently given to college students. You learn that the research question being investigated is: “Is there a significant relationship between the amount of time spent reading and the time spent watching television?” You are also interested if there are other significant relationships that can be discovered? The survey data is located in this StudentSurvey.csv file.
+
+## 1:
+
+Use R to calculate the covariance of the Survey variables and provide an explanation of why you would use this calculation and what the results indicate.
+
+```{r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+cov(studSurvey_df$TimeReading, studSurvey_df$TimeTV)
+```
+
+Covariance measures the directional relationship between the returns on two variables. The covariance of the variables TimeReading and TimeTV from Student Survey is negative which indicates an inverse relationship. 
+
+## 2:
+
+Examine the Survey data variables. What measurement is being used for the variables? Explain what effect changing the measurement being used for the variables would have on the covariance calculation. Would this be a problem? Explain and provide a better alternative if needed.
+
+Variables: TimeReading, TimeTV
+Minutes are used for TimeTV and Hours for TimeReading. After changing the measurement units to minutes for TimeReading, there is a significant increase in covariance. 
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey-updated.csv")
+cov(studSurvey_df$TimeReading, studSurvey_df$TimeTV)
+```
+
+## 3:
+
+Choose the type of correlation test to perform, explain why you chose this test, and make a prediction if the test yields a positive or negative correlation?
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+cor(studSurvey_df$TimeReading, studSurvey_df$TimeTV, method="spearman")
+cor.test(studSurvey_df$TimeReading, studSurvey_df$TimeTV, method="spearman")
+```
+
+I will choose spearmans correlation because of the non parametric nature.
+
+
+## 4:
+
+Perform a correlation analysis of:
+
+## All variables
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+cor(studSurvey_df)
+```
+
+## A single correlation between two a pair of the variables
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+cor(studSurvey_df$TimeReading, studSurvey_df$TimeTV, use="complete.obs", method = "spearman")
+```
+
+## Repeat your correlation test in step 2 but set the confidence interval at 99%
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+cor.test(studSurvey_df$TimeReading, studSurvey_df$TimeTV, use="complete.obs", method = "spearman", conf.level=0.99)
+```
+
+## Describe what the calculations in the correlation matrix suggest about the relationship between the variables. Be specific with your explanation.
+
+Correlation is negative which indicates that both the variables are inversely related. As the confidence interval did not cross zero, it indicates that the value of correlation is negative. Time spent on tv and reading are negatively related
+
+## 5:
+
+Calculate the correlation coefficient and the coefficient of determination, describe what you conclude about the results.
+
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+
+# correlation coefficient
+correCoef <- cor(studSurvey_df$TimeReading, studSurvey_df$TimeTV, use="complete.obs", method = "spearman")
+
+# coefficient of determination
+coffDtn <- cor(studSurvey_df$TimeReading, studSurvey_df$TimeTV, use="complete.obs", method = "spearman")^2 
+
+correCoef
+coffDtn
+
+coffDtninPercnt <- coffDtn*100
+coffDtninPercnt
+
+```
+
+77% of time reading is dependent on time spent on TV
+
+## 6:
+
+Based on your analysis can you say that watching more TV caused students to read less? Explain.
+
+Yes, watching more TV reduces the time to read because of the negative correlation between these variables
+
+## 7:
+
+Pick three variables and perform a partial correlation, documenting which variable you are “controlling”. Explain how this changes your interpretation and explanation of the results.
+
+Variables: TimeReading, Happiness
+Controlling Variable: TimeTV
+
+``` {r include=TRUE}
+setwd("/Users/RajeevP/dsc520")
+studSurvey_df <- read.csv("data/student-survey.csv")
+# correlation coefficient
+correCoef <- cor(studSurvey_df$TimeReading, studSurvey_df$Happiness, use="complete.obs", method = "spearman")
+correCoef
+partCor <- pcor(c("TimeReading","Happiness","TimeTV"),var(studSurvey_df))
+partCor
+```
+
+Correlation Coefficient is coming as negative when comparing TimeReading and Happiness which indicates the inverse relation between these two variables.
+
+When TimeTV (Controlling variable) is brought into picture it changed the perception to a positive correlation which says that the relation between these two variables is direct

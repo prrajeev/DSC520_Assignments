@@ -1,0 +1,56 @@
+---
+title: "Final Project Step 1"
+author: "Radhakrishnan Ponisseril"
+date: "7/31/2021"
+output: pdf_document
+---
+
+## Introduction
+
+I work in Student Lending Business and one of the major challenge is reducing the charge off rate. As part of this project, I want to predict how can I reduce loan default that has high probability of charging off. It is a very interesting problem to solve because the more you can reduce the charge off you make the business more profitable. Through Data science I can create a model that would predict if a customer has high probability of defaulting and decline loan to such customers. 
+
+## Research questions
+
+1. I will look at the data sets provided below and see what data elements are available
+2. Are there any other elements that are needed to build a model? 
+3. What are the external factors that can cause loan defaulting?
+4. Does gender, age, profession have direct impact on defaulting?
+5. Do people default even if that have the capability to pay?
+
+## Approach
+
+We can create a model that would reject a loan application based on patterns of loan default or charge off. However, we need to be careful because we don't want to reject a loan that a customer would have paid off if the loan was approved (Revenue and Income loss). We can pass such applications for some additional validations before the loan is determined to be declined. 
+
+
+## How your approach addresses (fully or partially) the problem.
+
+We can apply regression models on the data to help us in this prediction. By giving the loans only to customers that would have high likelihood of paying addresses the problem in hand.
+
+##  Data
+
+1st Dataset: lending_club_loans.csv
+https://data.world/jaypeedevlin/lending-club-loan-data-2007-11
+
+It has the details of loans offered to customers and their final status (paid-off or charged off etc). There are several attributes in this dataset that can be used to create a model
+
+2nd Dataset: maddison_data_full.xlsx
+https://www.kaggle.com/mozturkmen/historical-economic-growth-and-income-dataset
+
+This dataset provides growth and income of US economy over the years. This is useful to derive if there is any correlation of economy and income on loans default.
+
+3rd Dataset : Unemployment.csv
+https://www.kaggle.com/jayrav13/unemployment-by-county-us
+
+It has details of unemployment in US and will help in the analysis of unemployment impact on loans default/charge off.
+
+
+## Required Packages
+ggm, ggplot2, dplyr, readr, readxl, pastecs, QuantPsyc, magrittr, purrr, stringr
+
+Note - There might be few packages I might have missed. Will add any missing packages in next week project delivery
+
+## Plots and Table Needs
+Scatter plots, line graphs and Histograms
+
+## Questions for future steps
+Determine if these 3 datasets are sufficient to create a model. Also, if there are any additional attributes that are needed to create a model.

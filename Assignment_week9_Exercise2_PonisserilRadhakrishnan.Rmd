@@ -1,0 +1,46 @@
+---
+title: "Assignment 9 Exercise 2"
+author: "Radhakrishnan Ponisseril"
+date: "8/7/2021"
+output: pdf_document
+---
+
+```{r include=TRUE, echo=FALSE}
+library(ggm)
+library(ggplot2)
+library(readr)
+library(pastecs)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(magrittr)
+library(purrr)
+library(stringr)
+library(QuantPsyc)
+library(caTools)
+library(survival)
+```
+
+## Fit a Logistic Regression Model to binary-classifier-data.csv dataset
+
+The dataset (found in binary-classifier-data.csv) contains three variables; label, x, and y. The label variable is either 0 or 1 and is the output we want to predict using the x and y variables.
+  1.  What is the accuracy of the logistic regression classifier?
+  2.  Keep this assignment handy, as you will be comparing your results from this week to next week.
+  
+```{r include=TRUE, echo=FALSE, message = FALSE, warning = FALSE}
+setwd("/Users/RajeevP/dsc520")
+binaryClassifier_df <- read.csv("data/binary-classifier-data.csv", stringsAsFactors = FALSE)
+binaryClassifierModel <- glm(label ~ x + y, data = binaryClassifier_df, family = binomial())
+summary(binaryClassifierModel)
+```
+```{r include=TRUE, , echo=FALSE}
+res <- predict(binaryClassifierModel, binaryClassifier_df, type = "response")
+
+# Confusion Matrix
+confMatrix <- table(Actual_value = binaryClassifier_df$label, Predicted_value= res>0.5)
+confMatrix
+
+# Accuracy of Model
+accuracy <- (confMatrix[[1,1]] + confMatrix[[2,2]]) / sum(confMatrix) * 100
+print(paste("Accuracy of the model: ",round(accuracy,digits = 2) , "%"))
+```

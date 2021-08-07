@@ -1,0 +1,56 @@
+---
+title: "Assignment 9 Exercise 1"
+author: "Radhakrishnan Ponisseril"
+date: "8/7/2021"
+output: pdf_document
+---
+
+```{r include=TRUE, echo=FALSE}
+library(ggm)
+library(ggplot2)
+library(readr)
+library(pastecs)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(magrittr)
+library(purrr)
+library(stringr)
+library(QuantPsyc)
+library(caTools)
+library(survival)
+```
+
+## Fit a Logistic Regression Model to Thoracic Surgery Binary Dataset
+
+
+```{r include=TRUE, , echo=FALSE, message = FALSE, warning = FALSE}
+setwd('/Users/RajeevP/dsc520')
+thoracicSurgery_df <- read.csv("data/Thoracic_Surgery.csv")
+```
+
+Assignment Instructions:
+1. Fit a binary logistic regression model to the data set that predicts whether or not the patient survived for one year (the Risk1Y variable) after the surgery. Use the glm() function to perform the logistic regression. See Generalized Linear Models for an example. Include a summary using the summary() function in your results.
+
+```{r include=TRUE, , echo=FALSE}
+thoracicSurgery_df$DGN <- as.factor(thoracicSurgery_df$DGN)
+thoracicSurgery_df$PRE14 <- as.factor(thoracicSurgery_df$PRE14)
+thoracicSurgery <- glm(Risk1Yr ~ DGN + PRE4 + PRE5 + PRE6 + PRE7 + PRE8 + PRE9 + PRE10 + PRE11 + PRE14 + PRE17 + PRE19 + PRE25 + PRE30 + PRE32 + AGE , data = thoracicSurgery_df, family = binomial())
+summary(thoracicSurgery)
+```
+2. According to the summary, which variables had the greatest effect on the survival rate?
+To compute the accuracy of your model, use the dataset to predict the outcome variable. The percent of correct predictions is the accuracy of your model. What is the accuracy of your model?
+
+```{r include=TRUE, , echo=FALSE}
+res <- predict(thoracicSurgery, thoracicSurgery_df, type = "response")
+
+# Confusion Matrix
+confMatrix <- table(Actual_value = thoracicSurgery_df$Risk1Yr, Predicted_value= res>0.5)
+confMatrix
+
+# Accuracy of Model
+accuracy <- (confMatrix[[1,1]] + confMatrix[[2,2]]) / sum(confMatrix) * 100
+print(paste("Accuracy of the model: ",round(accuracy,digits = 2) , "%"))
+```
+
+PRE14 and PRE9 had the greatest effect on the survival rate.

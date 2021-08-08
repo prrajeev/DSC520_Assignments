@@ -1,0 +1,69 @@
+---
+title: "Final Project Step 2"
+author: "Radhakrishnan Ponisseril"
+date: "8/8/2021"
+output: pdf_document
+---
+
+```{r include=TRUE, echo=FALSE, message = FALSE, warning = FALSE}
+library(ggm)
+library(ggplot2)
+library(readr)
+library(magrittr)
+library(purrr)
+library(pastecs)
+library(readxl)
+library(plyr)
+library(dplyr)
+library(stringr)
+library(QuantPsyc)
+library(caTools)
+library(survival)
+```
+
+## How to import and clean my data
+
+I have used read_csv() to import the data into a data frame and removed duplicates
+Fields that are retained from the original data set that can be utilized to predict the loan status
+
+id	
+member_id	
+loan_amnt	
+funded_amnt	
+funded_amnt_inv	
+term	
+int_rate	
+installment	
+home_ownership	
+annual_inc	
+verification_status	
+issue_d	
+loan_status	
+addr_state	
+fico_range_low	
+fico_range_high
+
+## What does the final data set look like?
+```{r include=TRUE,echo=FALSE, message = FALSE, warning = FALSE}
+setwd("/Users/RajeevP/dsc520")
+lendClubLoans_df <- read_csv("data/lending_club_loans.csv")
+head(lendClubLoans_df)
+```
+## What information is not self-evident?
+None
+
+## What are different ways you could look at this data?
+1. Interest Rate Vs Loan Status (Charged off or not)
+2. Annual Income Vs Loan Status (Charged off or not)
+
+## How do you plan to slice and dice the data?
+There are multiple status of loans in the loan status field. I am going to take customers those are charged off into one variable and others into another variable of data frame type.
+
+## How could you summarize your data to answer key questions?
+I will use summary() function on the model in providing the R and R-squared if Linear model and AIC. I will use Deviations if it is a Logistic regression. It will provide us the information on how predictors influence the outcome
+
+## What types of plots and tables will help you to illustrate the findings to your questions?
+Scatter plots, line graphs, histograms
+
+## Do you plan on incorporating any machine learning techniques to answer your research questions? Explain.
+I will use logistic Regression on the data as Charge off Yes or No is the outcome based on the predictors.

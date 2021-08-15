@@ -1,0 +1,42 @@
+---
+title: "Final Project Part 3"
+author: "Radhakrishnan Ponisseril"
+date: "8/14/2021"
+output: pdf_document
+---
+## Introduction
+The Project is about predicting whether the customers loans default or not. It is very important to at least have more than 90% recovery rate to ensure business is profitable which could further be expanded to other segments. We can build predictive models based on the information of customers available.
+
+## The problem statement you addressed
+
+Lending business will be profitable if customers pays their interest on loans and do not default. If more loans default it will impact the profitability of the business. Thus, it is important that the lender is able to predict the likelihood of a borrower defaulting before offering loan to the customer.
+
+## How you addressed this problem statement
+
+There are three different datasets used: 
+
+1. Customer Loan Details over years from a bank
+2. Unemployment rate over the years in US
+3. Growth and income of US economy over the years.
+
+All the three data sets are combined into a single data set that has all the available information for a model to predict the outcome. I used logistic regression model to identify the relation between variable loanDefault based on the variables interest rate, Fico Score, Annual Income, Unemployment rate during the loan defaulted year
+
+loanDefaultModel <- glm(loanDefault ~ interest rate + Fico Score + Annual Income + Unemployment rate , data = lendingData_df, family = binomial())
+
+## Analysis
+
+When summary applied on the model it implied that Unemployment rate, interest rate and Annual income had the highest impact on the loan default.
+
+## Implications
+
+Interest Rate and Annual Income are playing a major role on the loans that are getting charged off as per the datasets that I used for the analysis. Higher Interest Rate results in high monthly payments which are tough to repay if their Annual income is less. When we provide loan, we have to factor the annual income of a customer and some other financial details related to customer based on which we can approve the loan amount (either decrease or approve the same amount applied for).
+
+## Limitations
+
+To help customers there are so many disaster programs were offered on the loans like zero interest for 3-6 months, clearing the past due amount till they got relief because of pandemic. To improve the model, I should have also considered the disaster programs that provided by governments or financial institutions which helped the customers during bad phase during all the years to repay their loans.
+
+## Concluding Remarks
+
+The model predicts that the annual interest rate (APR) and annual income are variables that decides the outcome of the loan whether it charges off or not. Also the accuracy of the model is more than 74% which implies that it is not a bad model with the data that we have at hand. Variables like fico score and Unemployment rate did not have a significant impact on the model. 
+
+To conclude higher the interest rate and Lower Annual Income increases the risk of loan getting charged off. 
